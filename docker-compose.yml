@@ -1,0 +1,18 @@
+version: "3.6"
+services:
+  tc_server:
+    build: "$PWD/server"
+    volumes:
+      - "/lib/modules:/lib/modules:ro"
+      - "$PWD/server/entrypoint.sh:/root/script/entrypoint.sh"
+    container_name: "tc_server"
+    privileged: "true"
+  
+  tc_client:
+    build: "$PWD/client"
+    volumes:
+      - "$PWD/client/entrypoint.sh:/root/script/entrypoint.sh"
+      - "$PWD/client/data:/root/data"
+    depends_on:
+      - "tc_server"
+    container_name: "tc_client"
